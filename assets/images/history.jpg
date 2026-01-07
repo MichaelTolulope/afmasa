@@ -1,0 +1,7 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#f0f0f0"/>
+  <rect x="50" y="50" width="300" height="300" fill="#003366"/>
+  <rect x="450" y="50" width="300" height="300" fill="#0055b3"/>
+  <text x="200" y="220" font-size="24" fill="white" text-anchor="middle">History</text>
+  <text x="600" y="220" font-size="24" fill="white" text-anchor="middle">Growth</text>
+</svg>
