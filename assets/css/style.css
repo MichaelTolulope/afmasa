@@ -1922,6 +1922,7 @@ p {
 .stats-section {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: var(--text-white);
+    margin: 0 0 200px 0;
 }
 
 .stats-grid {

@@ -24,6 +24,54 @@ const galleryContainer = document.querySelector('.gallery-grid')
 let currentLightboxIndex = 0;
 let filteredGalleryItems = [];
 
+/* ========== GALLERY DATA ========== */
+const galleryData = [
+    { id: 1, image: 'gallery/b1-1024x683-640x480_c.jpg.jpeg', title: 'AFMASA 2025 - Maritime Conference', category: 'conference' },
+    { id: 2, image: 'gallery/c.jpg.jpeg', title: 'Maritime Professional Networking', category: 'networking' },
+    { id: 3, image: 'gallery/d-1024x683-640x480_c.jpg.jpeg', title: 'Panel Discussion - African Shipping Leaders', category: 'speakers' },
+    { id: 4, image: 'gallery/e-1024x683-640x480_c.jpg.jpeg', title: 'African Maritime Cooperation Forum', category: 'maritime' },
+    { id: 5, image: 'gallery/e.jpg.jpeg', title: 'Panel Discussion: Maritime Trade & Shipping', category: 'conference' },
+    { id: 6, image: 'gallery/e2-1024x684-640x480_c.jpg.jpeg', title: 'Panel Discussion - African Shipping Leaders', category: 'speakers' },
+    { id: 7, image: 'gallery/f-1024x683-640x480_c.jpg.jpeg', title: 'Evening Networking Reception', category: 'networking' },
+    { id: 8, image: 'gallery/f1-1024x683-640x480_c.jpg.jpeg', title: 'Women in Maritime Leadership', category: 'speakers' },
+    { id: 9, image: 'gallery/f1.jpg.jpeg', title: 'AFMASA 2025 Closing Session', category: 'conference' },
+    { id: 10, image: 'gallery/h1.jpg.jpeg', title: 'Intra-African Trade & Cooperation', category: 'maritime' },
+    { id: 11, image: 'gallery/i.jpg.jpeg', title: 'Port Operations & Logistics Forum', category: 'maritime' },
+    { id: 12, image: 'gallery/j.jpg.jpeg', title: 'B2B Maritime Matchmaking', category: 'networking' },
+    { id: 13, image: 'gallery/k-1024x683-640x480_c.jpg.jpeg', title: 'Regional Maritime Leaders Summit', category: 'speakers' },
+    { id: 14, image: 'gallery/l-1024x683-640x480_c.jpg.jpeg', title: 'Shipping Industry Workshop', category: 'conference' },
+    { id: 15, image: 'gallery/m2-640x480_c.jpg.jpeg', title: 'Maritime Professional Networking', category: 'networking' },
+    { id: 16, image: 'gallery/m2.jpg.jpeg', title: 'African Shipping Excellence Award Ceremony', category: 'maritime' }
+];
+
+/* ========== POPULATE GALLERY FROM DATA ========== */
+function populateGallery() {
+    if (!galleryContainer) return;
+    
+    galleryContainer.innerHTML = galleryData.map(item => `
+        <div class="gallery-item ${item.category}" data-category="${item.category}">
+            <img src="assets/images/${item.image}" alt="${item.title}">
+            <div class="gallery-overlay">
+                <button class="gallery-zoom" aria-label="View full image"><i class="icon ion-zoom-in"></i></button>
+            </div>
+            <p class="gallery-caption">${item.title}</p>
+        </div>
+    `).join('');
+    
+    // Re-query gallery items after populating
+    const allGalleryItems = document.querySelectorAll('.gallery-item');
+    if (allGalleryItems.length > 0) {
+        setupGalleryListeners(allGalleryItems);
+    }
+}
+
+// Call on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', populateGallery);
+} else {
+    populateGallery();
+}
+
 /* ========== HEADER SCROLL EFFECT ========== */
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
@@ -225,50 +273,57 @@ function filterEventItems(filter) {
     });
 }
 
-/* ========== GALLERY LIGHTBOX ========== */
-if (galleryItems.length > 0) {
-    galleryItems.forEach((item, index) => {
-        const zoomBtn = item.querySelector('.gallery-zoom');
-        if (zoomBtn) {
-            zoomBtn.addEventListener('click', () => {
-                filteredGalleryItems = Array.from(galleryItems).filter(g => 
-                    g.style.display !== 'none'
-                );
-                currentLightboxIndex = filteredGalleryItems.indexOf(item);
-                openLightbox();
+/* ========== SETUP GALLERY LISTENERS ========== */
+function setupGalleryListeners(allGalleryItems) {
+    if (allGalleryItems.length > 0) {
+        allGalleryItems.forEach((item, index) => {
+            const zoomBtn = item.querySelector('.gallery-zoom');
+            if (zoomBtn) {
+                zoomBtn.addEventListener('click', () => {
+                    filteredGalleryItems = Array.from(allGalleryItems).filter(g => 
+                        g.style.display !== 'none'
+                    );
+                    currentLightboxIndex = filteredGalleryItems.indexOf(item);
+                    openLightbox();
+                });
+            }
+        });
+
+        if (lightboxClose) {
+            lightboxClose.addEventListener('click', closeLightbox);
+        }
+
+        if (lightboxPrev) {
+            lightboxPrev.addEventListener('click', showPreviousImage);
+        }
+
+        if (lightboxNext) {
+            lightboxNext.addEventListener('click', showNextImage);
+        }
+
+        // Close lightbox on background click
+        if (lightboxModal) {
+            lightboxModal.addEventListener('click', (e) => {
+                if (e.target === lightboxModal) {
+                    closeLightbox();
+                }
             });
         }
-    });
 
-    if (lightboxClose) {
-        lightboxClose.addEventListener('click', closeLightbox);
-    }
-
-    if (lightboxPrev) {
-        lightboxPrev.addEventListener('click', showPreviousImage);
-    }
-
-    if (lightboxNext) {
-        lightboxNext.addEventListener('click', showNextImage);
-    }
-
-    // Close lightbox on background click
-    if (lightboxModal) {
-        lightboxModal.addEventListener('click', (e) => {
-            if (e.target === lightboxModal) {
-                closeLightbox();
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightboxModal && lightboxModal.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') showPreviousImage();
+                if (e.key === 'ArrowRight') showNextImage();
+                if (e.key === 'Escape') closeLightbox();
             }
         });
     }
+}
 
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (lightboxModal && lightboxModal.classList.contains('active')) {
-            if (e.key === 'ArrowLeft') showPreviousImage();
-            if (e.key === 'ArrowRight') showNextImage();
-            if (e.key === 'Escape') closeLightbox();
-        }
-    });
+/* ========== GALLERY LIGHTBOX ========== */
+if (galleryItems.length > 0) {
+    setupGalleryListeners(galleryItems);
 }
 
 function openLightbox() {
