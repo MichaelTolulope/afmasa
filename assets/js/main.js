@@ -41,8 +41,7 @@ const galleryData = [
     { id: 12, image: 'gallery/j.jpg.jpeg', title: 'B2B Maritime Matchmaking', category: 'networking' },
     { id: 13, image: 'gallery/k-1024x683-640x480_c.jpg.jpeg', title: 'Regional Maritime Leaders Summit', category: 'speakers' },
     { id: 14, image: 'gallery/l-1024x683-640x480_c.jpg.jpeg', title: 'Shipping Industry Workshop', category: 'conference' },
-    { id: 15, image: 'gallery/m2-640x480_c.jpg.jpeg', title: 'Maritime Professional Networking', category: 'networking' },
-    { id: 16, image: 'gallery/m2.jpg.jpeg', title: 'African Shipping Excellence Award Ceremony', category: 'maritime' }
+    { id: 15, image: 'gallery/m2.jpg.jpeg', title: 'African Shipping Excellence Award Ceremony', category: 'maritime' }
 ];
 
 /* ========== POPULATE GALLERY FROM DATA ========== */
@@ -466,9 +465,8 @@ function updatePageTitle() {
     const titleMap = {
         'index.html': 'AFMASA - Africa Federation of Mining & Supply Associations',
         'about.html': 'About AFMASA',
-        'membership.html': 'Membership - AFMASA',
-        'events.html': 'Events - AFMASA',
-        'news.html': 'News & Media - AFMASA',
+        'agenda.html': 'Event Agenda - AFMASA',
+        'speakers.html': 'Speakers - AFMASA',
         'gallery.html': 'Gallery - AFMASA',
         'contact.html': 'Contact - AFMASA'
     };

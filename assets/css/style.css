@@ -2362,7 +2362,7 @@ p {
 
     .nav-menu {
         position: absolute;
-        top: 65px;
+        top: 70px;
         left: 0;
         right: 0;
         flex-direction: column;
@@ -2375,7 +2375,7 @@ p {
     }
 
     .nav-menu.active {
-        max-height: 400px;
+        max-height: 500px;
     }
 
     .nav-menu li {
@@ -2556,6 +2556,17 @@ p {
   }
   .cta-banner{
     margin: 25px;
+}
+.gallery-zoom{
+    z-index: 2;
+    opacity: 0.5;
+}
+.event-card{
+    display: flex;
+    flex-direction: column;
+}
+.event-date{
+    padding: var(--spacing-sm) 3rem;
 }
 
     
