@@ -11,7 +11,6 @@ const header = document.querySelector('.header');
 const contactForm = document.getElementById('contactForm');
 const faqQuestions = document.querySelectorAll('.faq-question');
 const filterTabs = document.querySelectorAll('.filter-tab');
-const galleryItems = document.querySelectorAll('.gallery-item');
 const lightboxModal = document.getElementById('lightboxModal');
 const lightboxImage = document.querySelector('.lightbox-image');
 const lightboxCaption = document.querySelector('.lightbox-caption');
@@ -19,7 +18,9 @@ const lightboxClose = document.querySelector('.lightbox-close');
 const lightboxPrev = document.querySelector('.lightbox-prev');
 const lightboxNext = document.querySelector('.lightbox-next');
 const statNumbers = document.querySelectorAll('.stat-number');
-const galleryContainer = document.querySelector('.gallery-grid')
+
+let galleryItems = document.querySelectorAll('.gallery-item');
+let galleryContainer = document.querySelector('.gallery-grid')
 
 let currentLightboxIndex = 0;
 let filteredGalleryItems = [];
@@ -46,6 +47,11 @@ const galleryData = [
 
 /* ========== POPULATE GALLERY FROM DATA ========== */
 function populateGallery() {
+    // Re-get the container in case it wasn't available before
+    if (!galleryContainer) {
+        galleryContainer = document.querySelector('.gallery-grid');
+    }
+    
     if (!galleryContainer) return;
     
     galleryContainer.innerHTML = galleryData.map(item => `
@@ -59,18 +65,19 @@ function populateGallery() {
     `).join('');
     
     // Re-query gallery items after populating
-    const allGalleryItems = document.querySelectorAll('.gallery-item');
-    if (allGalleryItems.length > 0) {
-        setupGalleryListeners(allGalleryItems);
+    galleryItems = document.querySelectorAll('.gallery-item');
+    if (galleryItems.length > 0) {
+        setupGalleryListeners(galleryItems);
     }
 }
 
-// Call on page load
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', populateGallery);
-} else {
+// Ensure gallery populates when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Gallery container:', galleryContainer);
+    console.log('Gallery data length:', galleryData.length);
     populateGallery();
-}
+    console.log('Gallery items after populate:', galleryItems.length);
+}, { once: true });
 
 /* ========== HEADER SCROLL EFFECT ========== */
 window.addEventListener('scroll', () => {
