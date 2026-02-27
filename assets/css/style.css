@@ -347,13 +347,15 @@ p {
     z-index: 2;
     max-width: 900px;
     padding: var(--spacing-xl);
+    margin-top: var(--spacing-xxl);
     animation: heroFadeIn 1s ease-out 0.2s both;
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 3.1rem;
     font-weight: 800;
     margin-bottom: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
     color: var(--text-white);
     line-height: 1.15;
     letter-spacing: -1px;
@@ -372,7 +374,7 @@ p {
 }
 
 .hero-subtitle {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin-bottom: var(--spacing-xl);
     color: rgba(255, 255, 255, 0.95);
     font-weight: 300;
